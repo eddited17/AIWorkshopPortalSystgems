@@ -1,4 +1,4 @@
-//this file includes samples for structured output and few shot learning
+
 import OpenAI from 'openai';
 import dotenv from 'dotenv';
 import { zodResponseFormat } from "openai/helpers/zod";
