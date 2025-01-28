@@ -9,7 +9,9 @@
     "test": "node test.js"
   },
   "dependencies": {
+    "@themaximalist/vectordb.js": "^0.1.2",
     "chromadb": "^1.10.4",
+    "chromadb-default-embed": "^2.13.2",
     "dotenv": "^16.4.7",
     "langchain": "^0.3.13",
     "openai": "^4.80.1",
