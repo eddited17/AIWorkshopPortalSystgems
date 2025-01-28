@@ -1,26 +1,116 @@
 {
-  "name": "Leonardo Da Vinci - By Maurice W. Brockwell",
-  "document_date": "unknown",
-  "fields": [
-    "Author Name",
-    "Title",
-    "Subtitle",
-    "Illustrations",
-    "Illustration Details",
-    "Plate Number and Title",
-    "Illustration Locations",
-    "Birth of Leonardo",
-    "Early Life and Training",
-    "Works",
-    "Historical Context",
-    "Notable Achievements",
-    "Artistic Description",
-    "Philosophical Views",
-    "Family Background",
-    "Ancestry",
-    "Significance of Works",
-    "European Locations",
-    "List of Contents",
-    "List of Illustrations"
-  ]
+  "Extract Title Information": {
+    "name": "Leonardo Da Vinci",
+    "document_date": null,
+    "data": [
+      {
+        "key": "Author",
+        "value": "MAURICE W. BROCKWELL"
+      },
+      {
+        "key": "Illustration",
+        "value": "Plate 1--MONA LISA. Frontispiece"
+      }
+    ]
+  },
+  "Identify Main Sections": {
+    "name": "Leonardo Da Vinci",
+    "document_date": null,
+    "data": [
+      {
+        "key": "author",
+        "value": "MAURICE W. BROCKWELL"
+      }
+    ]
+  },
+  "Illustrations Extraction": {
+    "name": "Study of Leonardo Da Vinci",
+    "document_date": null,
+    "data": [
+      {
+        "key": "Illustration 1",
+        "value": "Mona Lisa - In the Louvre"
+      },
+      {
+        "key": "Illustration 2",
+        "value": "Annunciation - In the Uffizi Gallery, Florence"
+      },
+      {
+        "key": "Illustration 3",
+        "value": "Virgin of the Rocks - In the National Gallery, London"
+      },
+      {
+        "key": "Illustration 4",
+        "value": "The Last Supper - In the Refectory of Santa Maria delle Grazie, Milan"
+      },
+      {
+        "key": "Illustration 5",
+        "value": "Copy of the Last Supper - In the Diploma Gallery, Burlington House"
+      },
+      {
+        "key": "Illustration 6",
+        "value": "Head of Christ - In the Brera Gallery, Milan"
+      },
+      {
+        "key": "Illustration 7",
+        "value": "Portrait (presumed) of Lucrezia Crivelli - In the Louvre"
+      },
+      {
+        "key": "Illustration 8",
+        "value": "Madonna, Infant Christ, and St Anne - In the Louvre"
+      }
+    ]
+  },
+  "Content Analysis": {
+    "name": "Leonardo Da Vinci",
+    "document_date": null,
+    "data": [
+      {
+        "key": "Author",
+        "value": "MAURICE W. BROCKWELL"
+      },
+      {
+        "key": "Illustrations",
+        "value": "Eight Reproductions in Colour"
+      },
+      {
+        "key": "Contents",
+        "value": "Sections include: His Birth, His Early Training, His Early Works, First Visit to Milan, In the East, Back in Milan, The Virgin of the Rocks, The Last Supper, The Court of Milan, Leonardo Leaves Milan, Mona Lisa, Battle of Anghiari, Again in Milan, In Rome, In France, His Death, His Art, His Mind, His Maxims, His Spell, His Descendants."
+      },
+      {
+        "key": "Key Points - His Birth",
+        "value": "Leonardo Da Vinci was born in Vinci, Italy. His full legal name is Leonardo di Ser Piero d'Antonio di Ser Piero di Ser Guido da Vinci. His father was a notary, and his mother was Caterina."
+      }
+    ]
+  },
+  "Biographical Data Extraction": {
+    "name": "LEONARDO DA VINCI",
+    "document_date": null,
+    "data": [
+      {
+        "key": "birth_place",
+        "value": "Vinci, Italy"
+      },
+      {
+        "key": "birth_date",
+        "value": "April 15, 1452"
+      },
+      {
+        "key": "father_name",
+        "value": "Ser Piero"
+      },
+      {
+        "key": "father_occupation",
+        "value": "country notary"
+      },
+      {
+        "key": "mother_name",
+        "value": "Caterina"
+      },
+      {
+        "key": "historical_context",
+        "value": "many-sided genius of the Italian Renaissance"
+      }
+    ]
+  }
 }

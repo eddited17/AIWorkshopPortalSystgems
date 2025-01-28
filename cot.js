@@ -7,10 +7,42 @@ import { z } from "zod";
 // Load environment variables
 dotenv.config();
 
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "Get current temperature for a given location.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "type": "string",
+                    "description": "City and country e.g. Bogotá, Colombia"
+                }
+            },
+            "required": [
+                "location"
+            ],
+            "additionalProperties": False
+        },
+        "strict": True
+    }
+}]
+
+const DocumentProcessor = z.object({
+    name: z.string(),
+    processing_steps: z.array(z.object({
+        step: z.string(),
+        instructions: z.string(),
+    })),
+});
 const DocumentFields = z.object({
     name: z.string(),
     document_date: z.string().nullable(),
-    fields: z.array(z.string()),
+    data: z.array(z.object({
+        key: z.string(),
+        value: z.string(),
+    })),
 });
 
 // Initialize OpenAI client
@@ -126,65 +158,52 @@ vocation with distinction and success, and who subsequently--when
 Leonardo was a youth--was appointed notary to the Signoria of
 Florence. Leonardo's mother was one Caterina, who afterwards married
 Accabriga di Piero del Vaccha of Vinci.`;
-    
+
     try {
         const completion = await openai.chat.completions.create({
             messages: [
                 {
                     role: "system",
-                    content: "You are a helpful assistant that outputs JSON. Keep responses concise."
+                    content: "You are a document analysis assistant that outputs JSON. For each document, you come up with a list of processing steps that will help you extract the core information from to understand the document. The instructions should not include the analysis of the document but rather the what needs to be done in the specific step. The output should be a JSON object."
                 },
                 {
                     role: "user",
-                    content: "Please find fields for analysing the document."
-                },
-                {
-                    role: "assistant",
-                    content: "What do you think about searching for the document date?"
-                },
-                {
-                    role: "user",
-                    content: "Great, what other fields do you think we should search for?"
-                },
-                {
-                    role: "assistant",
-                    content: "What do you think about searching for the document participants?"
-                },
-                {
-                    role: "user",
-                    content: "Great, I think you got the principles right. Please output the fields in JSON format. This is the document: " + document
-                },
+                    content: "Please find processing steps for analysing the document. This is the document: " + document
+                }
             ],
             model: "gpt-4o",
-            response_format: zodResponseFormat(DocumentFields, "document_fields"),
+            response_format: zodResponseFormat(DocumentProcessor, "document_processor"),
         });
 
         const jsonres = JSON.parse(completion.choices[0].message.content);
 
-        const check_completion = await openai.chat.completions.create({
-            messages: [
-                {
-                    role: "system",
-                    content: `You are a helpful assistant that checks our output for mandatory fields. You output JSON with one field "included" which is boolean and one field "missing_fields" which is an array of strings.`
-                },
-                {
-                    role: "user",
-                    content: "This is the document with the fields, please check if there is a author field in there:" + JSON.stringify(jsonres.fields)
-                }
-            ],
-            model: "gpt-4o-mini",
-            response_format: {
-                type: "json_object"
-            }
-        });
+        const extractedData = {};
 
-        const jsonres2 = JSON.parse(check_completion.choices[0].message.content);
+        for (const step of jsonres.processing_steps) {
+            const check_completion = await openai.chat.completions.create({
+                messages: [
+                    {
+                        role: "system",
+                        content: `You are a helpful assistant that processes the document. This is the processing step we are currently working on: ${JSON.stringify(step)}. Please output the JSON object with the data.`
+                    },
+                    {
+                        role: "user",
+                        content: "This is the document with the fields, please check if there is a author field in there:" + document
+                    }
+                ],
+                model: "gpt-4o-mini",
+                response_format: zodResponseFormat(DocumentFields, "document_fields"),
+                functions: [
 
-        if (jsonres2.included) {
-            console.log('Response:', completion.choices[0].message.content);
-        } else {
-            console.log('Missing fields:', jsonres2);
+                ]
+            });
+
+            console.log(step.step);
+
+            extractedData[step.step] = JSON.parse(check_completion.choices[0].message.content);
         }
+
+        console.log('Response:', JSON.stringify(extractedData));
     } catch (error) {
         console.error('Error:', error);
     }
